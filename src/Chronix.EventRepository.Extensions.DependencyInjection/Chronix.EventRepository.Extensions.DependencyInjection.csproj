@@ -13,7 +13,12 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath=""/>
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Chronix.EventRepository\Chronix.EventRepository.csproj" />
