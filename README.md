@@ -20,3 +20,51 @@
 
 ```bash
 dotnet add package Chronix.EventRepository
+```
+
+## 🛠️ Configuring Dependency Injection
+
+Chronix provides a simple way to register your aggregates and projections using the built-in `IServiceCollection` extensions.
+
+Make sure you install the DI package:
+
+```bash
+dotnet add package Chronix.Extensions.DependencyInjection
+```
+
+### 2.1 ✅ Add an Event Repository
+Registers an event repository for your aggregate, using the given stream prefix.
+
+```bash
+builder.Services.AddEventRepository<MyAggregate>("Member");
+```
+
+### 2.2 ✅ Add Repository + Scan for Projections
+Scans the given assembly for any inline projections (e.g., read models or handlers) and wires them automatically.
+
+```bash
+builder.Services.AddEventRepository<MyAggregate>("Member", typeof(ProjectionAssemblyToScan));
+```
+
+### 2.2 ✅ Full Control: Configure the Builder
+Gives you full access to the builder to register serializers, encrypters, metadata enrichers and other options.
+
+```bash
+builder.Services.AddEventRepository<MyAggregate>(
+    "Member",
+    typeof(ProjectionAssemblyToScan),
+    (serviceProvider, builder) =>
+    {
+        builder.Encryption(new NoEncryptionEncrypter())
+                .MetadataEnricher(new BasicMetadataEnricher())
+                .Serializer(new AggregateRootSerializer())
+                .Options(new EventRepositoryOptions
+                {
+                    AutoRevisionAfterNthEvent = 100
+                });
+    });
+```
+
+
+
+

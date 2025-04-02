@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35716.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronix.EventRepository", "src\Chronix.EventRepository\Chronix.EventRepository.csproj", "{4A50FC87-F806-43DC-81DD-EADE559177EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronix.EventRepository.Extensions.DependencyInjection", "src\Chronix.EventRepository.Extensions.DependencyInjection\Chronix.EventRepository.Extensions.DependencyInjection.csproj", "{C60E6268-F252-4F52-80E1-10FED9F0DAAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4A50FC87-F806-43DC-81DD-EADE559177EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A50FC87-F806-43DC-81DD-EADE559177EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A50FC87-F806-43DC-81DD-EADE559177EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60E6268-F252-4F52-80E1-10FED9F0DAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60E6268-F252-4F52-80E1-10FED9F0DAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60E6268-F252-4F52-80E1-10FED9F0DAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60E6268-F252-4F52-80E1-10FED9F0DAAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
