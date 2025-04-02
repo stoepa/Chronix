@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Chronix.EventRepository.Extensions.DependencyInjection</RootNamespace>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageId>Chronix.EventRepository.Extensions.DependencyInjection</PackageId>
     <Authors>Theunis van der Stoep</Authors>
     <PackageProjectUrl>https://github.com/stoepa/Chronix/tree/master/src/Chronix.EventRepository.Extensions.DependencyInjection</PackageProjectUrl>

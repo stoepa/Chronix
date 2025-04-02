@@ -65,6 +65,17 @@ builder.Services.AddEventRepository<MyAggregate>(
     });
 ```
 
+### 3. Usage
+Inject the `IEventRepository<MyAggregate> eventRepository` where you would require it.
+
+```bash
+var myAggregate = await eventRepository.GetById();
+
+myAggregate.RaiseSomeEvents();
+
+var result = await eventRepository.Append(myAggregate);
+```
+
 
 
 
