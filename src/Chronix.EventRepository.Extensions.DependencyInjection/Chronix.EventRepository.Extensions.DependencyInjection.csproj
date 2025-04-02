@@ -1,4 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Chronix.EventRepository.Extensions.DependencyInjection</RootNamespace>
+    <Version>1.0.0</Version>
+    <PackageId>Chronix.EventRepository.Extensions.DependencyInjection</PackageId>
+    <Authors>Theunis van der Stoep</Authors>
+    <PackageProjectUrl>https://github.com/stoepa/Chronix/tree/master/src/Chronix.EventRepository.Extensions.DependencyInjection</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/stoepa/Chronix</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Chronix.EventRepository\Chronix.EventRepository.csproj" />
   </ItemGroup>

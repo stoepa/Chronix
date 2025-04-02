@@ -1,0 +1,35 @@
+name: Build & Publish NuGet Packages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack all projects
+        run: |
+          dotnet pack src/Chronix.EventRepository/Chronix.EventRepository.csproj --configuration Release --no-build
+          dotnet pack src/Chronix.EventRepository.Extensions.DependencyInjection/Chronix.EventRepository.Extensions.DependencyInjection.csproj --configuration Release --no-build
+
+      - name: Push NuGet packages
+        run: |
+          find . -name "*.nupkg" -not -name "*.snupkg" -exec dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json \;
+          find . -name "*.snupkg" -exec dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json \;
