@@ -29,7 +29,7 @@ Chronix provides a simple way to register your aggregates and projections using 
 Make sure you install the DI package:
 
 ```bash
-dotnet add package Chronix.Extensions.DependencyInjection
+dotnet add package Chronix.EventRepository.Extensions.DependencyInjection
 ```
 
 ### 2.1 ✅ Add an Event Repository
