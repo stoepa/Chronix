@@ -1,0 +1,28 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <style>
+    .bg { fill: #0F172A; }
+    .clock { stroke: #3B82F6; stroke-width: 12; fill: none; }
+    .hand { stroke: #3B82F6; stroke-width: 10; stroke-linecap: round; }
+    .dot { fill: #3B82F6; }
+    .trail { stroke: #3B82F6; stroke-dasharray: 4 8; stroke-width: 4; opacity: 0.6; }
+  </style>
+
+  <!-- Background -->
+  <rect width="256" height="256" rx="32" class="bg"/>
+
+  <!-- Clock circle -->
+  <circle cx="128" cy="128" r="64" class="clock"/>
+
+  <!-- Clock hands -->
+  <line x1="128" y1="128" x2="128" y2="80" class="hand"/>
+  <line x1="128" y1="128" x2="172" y2="128" class="hand"/>
+
+  <!-- Event trail (circular dashed orbit) -->
+  <circle cx="128" cy="128" r="92" class="trail"/>
+
+  <!-- Dots as events on the trail -->
+  <circle cx="128" cy="36" r="6" class="dot"/>
+  <circle cx="200" cy="128" r="6" class="dot"/>
+  <circle cx="128" cy="220" r="6" class="dot"/>
+  <circle cx="56" cy="128" r="6" class="dot"/>
+</svg>
