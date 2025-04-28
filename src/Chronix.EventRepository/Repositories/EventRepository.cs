@@ -40,7 +40,11 @@ public class EventRepository<T>(EventStoreClient eventStoreClient, string stream
 
                     var json = aggregate.Revision();
 
-                    await VersionStream(aggregate, json, cancellationToken);
+                    if (eventRepositoryOptions.VersioningStrategy == VersioningStrategy.ReadBackwards)
+                        await VersionStream(aggregate, json, cancellationToken);
+                    else if (eventRepositoryOptions.VersioningStrategy == VersioningStrategy.SeparateIndex)
+                        await VersionIndexedStream(aggregate, json, cancellationToken);
+
                 }
             }
 
@@ -48,7 +52,7 @@ public class EventRepository<T>(EventStoreClient eventStoreClient, string stream
         }
     }
 
-    private async Task VersionStream(T aggregate, string json, CancellationToken cancellationToken)
+    private async Task<VersionStreamResult> VersionStream(T aggregate, string json, CancellationToken cancellationToken)
     {
         var streamName = streamBaseName + aggregate.Id;
         var newStreamId = Guid.NewGuid();
@@ -68,7 +72,23 @@ public class EventRepository<T>(EventStoreClient eventStoreClient, string stream
             Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new DomainEventMetadata(AggregateId: aggregate.Id, DateTime.UtcNow, null))));
 
         var oldStreamResult = await eventStoreClient.AppendToStreamAsync(lastStream.Item1.Last(), StreamState.StreamExists, [eventData], cancellationToken: cancellationToken);
+
+        return new VersionStreamResult(newStreamName, lastStream.Item2 + 2);
     }
+
+    private async Task VersionIndexedStream(T aggregate, string json, CancellationToken cancellationToken)
+    {
+        var versioningResult = await VersionStream(aggregate, json, cancellationToken);
+        var indexName = streamBaseName + "index-" + aggregate.Id;
+        var indexEvent = new StreamRevisionIndexEvent(aggregate.Id,
+            versioningResult.NewStreamName, DateTime.Now, versioningResult.LatestVersion);
+        var eventData = new EventData(Uuid.NewUuid(), nameof(StreamRevisionIndexEvent),
+            Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(indexEvent)),
+            Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new DomainEventMetadata(aggregate.Id, DateTime.UtcNow, null))));
+
+        await eventStoreClient.AppendToStreamAsync(indexName, StreamState.Any, [eventData], cancellationToken: cancellationToken);
+    }
+
 
     private async Task<Result<long>> AppendInternal(T aggregate, List<IProjection> projections, CancellationToken cancellationToken = default)
     {
@@ -143,7 +163,7 @@ public class EventRepository<T>(EventStoreClient eventStoreClient, string stream
                         await p.Rollback(aggregate, proj.Key, cancellationToken, ex);
                 return Result<long>.Failure("Wrong Expected Version");
             }
-            
+
         }
     }
 
